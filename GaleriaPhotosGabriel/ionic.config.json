@@ -1,0 +1,7 @@
+{
+  "name": "GaleriaPhotosGabriel",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue-vite"
+}

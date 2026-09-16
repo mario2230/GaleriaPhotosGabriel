@@ -8,11 +8,17 @@
           <ion-label>Home</ion-label>
         </ion-tab-button>
 
-        <ion-tab-button tab="tab2" href="/tabs/sobre">
+
+
+        <ion-tab-button tab="tab2" href="/tabs/fotos">
+          <ion-icon aria-hidden="true" :icon="imageOutline" />
+          <ion-label>Fotos</ion-label>
+        </ion-tab-button>
+
+         <ion-tab-button tab="tab2" href="/tabs/sobre">
           <ion-icon aria-hidden="true" :icon="bookOutline" />
           <ion-label>Sobre</ion-label>
         </ion-tab-button>
-
       </ion-tab-bar>
     </ion-tabs>
   </ion-page>
@@ -20,5 +26,5 @@
 
 <script setup lang="ts">
 import { IonTabBar, IonTabButton, IonTabs, IonLabel, IonIcon, IonPage, IonRouterOutlet } from '@ionic/vue';
-import { homeOutline, bookOutline } from 'ionicons/icons';
+import { homeOutline, imageOutline  , bookOutline } from 'ionicons/icons';
 </script>

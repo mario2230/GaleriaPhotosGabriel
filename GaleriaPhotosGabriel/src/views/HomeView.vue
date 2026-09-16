@@ -66,7 +66,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 
 import {
     Camera,
@@ -93,11 +93,12 @@ import {
     addOutline,
     imagesOutline,
     trashOutline,
-    logOutOutline
+    logOutOutline,
 } from 'ionicons/icons'
 
 import { useRouter } from 'vue-router'
 import { useAuth } from '@/composables/useAuth'
+import { Directory, Filesystem } from '@capacitor/filesystem'
 
 const router = useRouter()
 
@@ -112,6 +113,29 @@ function sair() {
 const fotos = ref<string[]>([])
 
 
+async function salvarImagem(dataUrl: string) {
+    const base64Data = dataUrl.split(',')[1]
+
+    if(!base64Data) {
+        throw new Error('Formato de imagem inválido')
+    }
+
+    await Filesystem.writeFile({
+        path: `foto-${Date.now()}.jpg`,
+        data: base64Data,
+        directory: Directory.Data
+    })
+}
+
+async function processarFoto(dataUrl: string) {
+    if(!dataUrl) return
+
+    await salvarImagem(dataUrl)
+    fotos.value.push(dataUrl)
+}
+
+
+
 async function adicionarFoto() {
     try {
 
@@ -123,12 +147,7 @@ async function adicionarFoto() {
         })
 
         if (foto.dataUrl) {
-            fotos.value.push(foto.dataUrl)
-
-            await mostrarToast(
-                'Foto adicionada com sucesso!',
-                'success'
-            )
+            await processarFoto(foto.dataUrl)
         }
 
     } catch (err: unknown) {
@@ -171,6 +190,24 @@ async function mostrarToast(
 
     await toast.present()
 }
+
+
+async function verificarPermissao() {
+    const status = await Camera.checkPermissions()
+
+    if(status.camera !== 'granted') {
+        const result = await Camera.requestPermissions()
+        if(result.camera !== 'granted') {
+            await mostrarToast('Permissão negada', 'danger')
+            return false
+        }
+    }
+
+    return true
+}
+
+onMounted(verificarPermissao)
+
 </script>
 
 <style scoped>

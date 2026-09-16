@@ -124,7 +124,9 @@ async function fazerLogin() {
   await toast.present()
 
   if (resultado.sucesso) {
+    localStorage.setItem('usuarioLogado', 'true')
     router.replace('/tabs/home')
+
   }
 }
 

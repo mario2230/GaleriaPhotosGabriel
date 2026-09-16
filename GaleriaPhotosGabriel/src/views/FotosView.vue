@@ -2,7 +2,7 @@
     <ion-page>
         <ion-header>
             <ion-toolbar>
-                <ion-title>Minhas fotos</ion-title>
+                <ion-title>Minhas foto</ion-title>
             </ion-toolbar>
         </ion-header>
         <ion-content :fullscreen="true" class="ion-padding">

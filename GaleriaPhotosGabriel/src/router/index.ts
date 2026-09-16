@@ -28,15 +28,18 @@ const routes: Array<RouteRecordRaw> = [
       },
       {
         path: 'home',
-        component: () => import('@/views/HomeView.vue')
+        component: () => import('@/views/HomeView.vue'),
+        meta: { requerAutenticacao: true}
       },
       {
         path: 'fotos',
-        component: () => import('@/views/FotosView.vue')  
+        component: () => import('@/views/FotosView.vue'),
+        meta: { requerAutenticacao: true}  
       },
       {
         path: 'sobre',
-        component: () => import('@/views/SobreView.vue')
+        component: () => import('@/views/SobreView.vue'),
+        meta: { requerAutenticacao: true}
       }
     ]
   }
@@ -45,6 +48,16 @@ const routes: Array<RouteRecordRaw> = [
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes
+})
+
+router.beforeEach((to, from, next) => {
+  const usuarioLogado = localStorage.getItem('usuarioLogado') === 'true'
+
+  if (to.meta.requerAutenticacao && !usuarioLogado) {
+    next('/login') 
+  } else {
+    next() 
+  }
 })
 
 export default router

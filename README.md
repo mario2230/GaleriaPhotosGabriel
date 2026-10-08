@@ -51,7 +51,7 @@ As imagens adicionadas à galeria são armazenadas em um vetor durante a utiliza
 ### 1. Clonar o repositório
 
 ```bash
-git clone URL_DO_REPOSITORIO
+git clone [URL_DO_REPOSITORIO](https://github.com/mario2230/GaleriaPhotosGabriel)
 ```
 
 Entre na pasta do projeto:
